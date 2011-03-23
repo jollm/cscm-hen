@@ -1,0 +1,53 @@
+* hen --- a beanstalk client
+[[http://kr.github.com/beanstalkd/][beanstalk]] is a protocol for interfacing with beanstalkd, a "simple, fast work queue."
+
+hen is a simple client for workers and producers
+
+** Examples
+*** Worker
+#+BEGIN_SRC scheme
+  (with-hen (tcp-connect "localhost" 11300)
+    (while #t         
+      (hen-ignore "default")
+      (hen-watch "my-tube")
+      (let ([job (hen-reserve)]) ; blocks, optional timeout parameter
+        (my-process-job job)
+        (hen-delete ((compose cdr assoc) 'id job)))))
+#+END_SRC
+*** Producer
+#+BEGIN_SRC scheme
+  (with-hen (tcp-connect "localhost" 11300)
+    (hen-use "my-tube")
+    (hen-put "hello worker!"))
+#+END_SRC
+** Procedures
+The following are supported beanstalk commands:
+#+BEGIN_EXAMPLE
+(hen-put [PRI 2^31 [DELAY 0 [TTR 36000]]] data)
+(hen-reserve [TIMEOUT #f])
+(hen-use TUBE)
+(hen-delete ID)
+(hen-release ID [PRI 2^31 [DELAY 0]])
+(hen-bury ID [PRI 2^31])
+(hen-touch ID)
+(hen-watch TUBE)
+(hen-ignore TUBE)
+(hen-peek ID)
+(hen-peek-ready)
+(hen-peek-delayed)
+(hen-peek-buried)
+(hen-kick bound)
+(hen-stats-job ID)
+(hen-stats-tube TUBE)
+(hen-stats)
+(hen-list-tubes)
+(hen-list-tube-used)
+(hen-list-tubes-watched)
+(hen-quit)
+(hen-pause-tube TUBE DELAY)
+#+END_EXAMPLE
+Most of the commands will return a simple string status. Exceptions
+are the stats commands, which return an alist, and the reserve
+command, which returns a pair (job-id . data) if a job is reserved.
+** Notes
+- The structure of return values is subject to change.
