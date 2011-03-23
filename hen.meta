@@ -1,0 +1,15 @@
+;;; -*- Scheme -*-
+
+;;; hen.meta.
+
+((license "GPL-3")
+ 
+ (category data)
+ 
+ (needs lambda+ list-utils miscmacros regex tcp6)
+
+ (test-depends test)
+ 
+ (author "Joseph Gay")
+ 
+ (synopsis "A beanstalk client"))

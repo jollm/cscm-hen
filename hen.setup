@@ -1,0 +1,11 @@
+;;; -*- Scheme -*-
+
+(compile -s -O3 -d1 "hen.scm" -j hen)
+(compile -c -O3 -d1 "hen.scm" -unit hen)
+(compile -s -O3 -d0 "hen.import.scm")
+
+(install-extension
+ 'hen
+ '("hen.o" "hen.so" "hen.import.so")
+ '((version 0.5.0)
+   (static "hen.o")))
