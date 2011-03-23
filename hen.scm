@@ -64,9 +64,9 @@
   (syntax-rules ()
     [(with-beanstalk tcp-connection body1 body2 ...)
      (let-values ([(i o) tcp-connection])
-       (fluid-let ([hen-in i]
-                   [hen-out o])
-         body1 body2 ...))]))
+       (fluid-let ([hen-in i] [hen-out o])
+         (let ([res (begin body1 body2 ...)])
+           (hen-quit) res)))]))
 
 (define+ (hen-put #!rest args #!key (tcp-in hen-in) (tcp-out hen-out))
   (apply (case-lambda
