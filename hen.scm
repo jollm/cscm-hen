@@ -43,11 +43,13 @@
  hen-list-tube-used
  hen-list-tubes-watched
  hen-quit
- hen-pause-tube)
+ hen-pause-tube
+ hen-in
+ hen-out)
 
 (import scheme chicken)
 
-(use chicken lambda+ list-utils miscmacros regex tcp6)
+(use chicken data-structures extras lambda+ list-utils miscmacros regex srfi-1 tcp6)
 
 (import-for-syntax chicken)
 
