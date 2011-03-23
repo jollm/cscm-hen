@@ -51,20 +51,12 @@
 
 (import-for-syntax chicken)
 
+(include "hen.utils")
+
 (define hen-in)
 (define hen-out)
 
 (define priority-default (expt 2 31))
-
-(define (->string+ #!rest args)
-  (fold-right string-append "" (map ->string args)))
-
-(define (second-match regex s)
-  (if* (string-match regex s) (if (not (null? (cdr it))) (second it) #f)
-       #f))
-
-(define (parse-yaml yaml)
-  (plist->alist (flatten (cdr (filter-map (lambda (s) (string-split s ": ")) (string-split yaml "\n"))))))
 
 (define-syntax with-hen
   (syntax-rules ()
