@@ -70,8 +70,8 @@
 
 (define+ (hen-put #!rest args #!key (tcp-in hen-in) (tcp-out hen-out))
   (apply (case-lambda
-           ([data] (hen-put priority-default 0 36000 data))
-           ([pri data] (hen-put pri 0 36000 data))
+           ([data] (hen-put priority-default 0 36000 data #:tcp-in tcp-in #:tcp-out tcp-out))
+           ([pri data] (hen-put pri 0 36000 data #:tcp-in tcp-in #:tcp-out tcp-out))
            ([pri delay ttr data]
             (write-line (string-append (->string+ "put " pri " " delay " " ttr " " (string-length data)) "\r")
                         tcp-out)
