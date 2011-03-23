@@ -6,7 +6,7 @@
  
  (category data)
  
- (needs lambda+ list-utils miscmacros regex tcp6)
+ (needs lambda+ list-utils miscmacros tcp6)
 
  (test-depends test)
  
