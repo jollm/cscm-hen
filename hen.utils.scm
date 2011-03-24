@@ -28,5 +28,8 @@
        #f))
 
 ;; this parses beanstalk's yaml, nothing generic intended
-(define (parse-yaml yaml)
+(define (parse-yaml-alist yaml)
   (plist->alist (flatten (cdr (filter-map (lambda (s) (string-split s ": ")) (string-split yaml "\n"))))))
+
+(define (parse-yaml-list yaml)
+  (cdr (map (cut string-drop <> 2) (string-split yaml "\n"))))

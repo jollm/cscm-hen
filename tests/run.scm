@@ -30,7 +30,7 @@
 (test-begin "all commands with dummy data")
 
 (test "zero param commands"
-      '("OK 13" "OK 13" "OK 13" (("test" . "data")) "OK 13" (("test" . "data")) (("test" . "data")) "OK 13")
+      '("OK 13" "OK 13" "OK 13" (("test" . "data")) "OK 13" (("test" . "data")) ("st:data") "OK 13")
       (map (lambda (p) (p #:tcp-in (open-input-string "OK 13\r\n---\ntest:data\r\n") #:tcp-out (open-output-string))) command-list-0))
 
 (test "single param commands"

@@ -49,7 +49,7 @@
 
 (import scheme chicken)
 
-(use chicken data-structures extras lambda+ list-utils miscmacros regex srfi-1 tcp6)
+(use chicken data-structures extras lambda+ list-utils miscmacros regex srfi-1 srfi-13 tcp6)
 
 (import-for-syntax chicken)
 
@@ -121,8 +121,8 @@
             (define-hen-command command-2  (arg-2 ...) ...)
       ...)]))
 
-(define (read-stats res tcp-in)
-  (if* (second-match "^OK (\\d+)$" res) (parse-yaml (read-string (string->number it) tcp-in))))
+(define (read-stats res tcp-in #!optional (parser parse-yaml-alist))
+  (if* (second-match "^OK (\\d+)$" res) (parser (read-string (string->number it) tcp-in))))
 
 (define-hen-command-list
   [use (tube)]
@@ -142,7 +142,7 @@
   [stats () (read-stats res tcp-in)]
   [list-tubes () (read-stats res tcp-in)]
   [list-tube-used ()]
-  [list-tubes-watched () (read-stats res tcp-in)]
+  [list-tubes-watched () (read-stats res tcp-in parse-yaml-list)]
   [quit ()]
   [pause-tube (tube delay)])
 
