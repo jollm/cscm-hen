@@ -49,5 +49,9 @@ The following are supported beanstalk commands:
 Most of the commands will return a simple string status. Exceptions
 are the stats commands, which return an alist, and the reserve
 command, which returns a pair (job-id . data) if a job is reserved.
+
+All hen commands also accept keyword arguments #:tcp-in and #:tcp-out
+to override hen-in and hen-out, which are the default ports,
+initially unspecified.
 ** Notes
 - The structure of return values is subject to change.
