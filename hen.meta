@@ -12,4 +12,5 @@
  
  (author "Joseph Gay")
  
- (synopsis "A beanstalk client"))
+ (synopsis "A beanstalk client")
+ (files "hen.scm" "README.org" "gpl-3.0.txt" "hen.meta" "doc/protocol.txt" "hen.setup" "hen.utils.scm" "tests/run.scm"))
