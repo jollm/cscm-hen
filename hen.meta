@@ -6,7 +6,7 @@
  
  (category net)
  
- (needs dsssl-utils list-utils miscmacros tcp6)
+ (needs dsssl-utils list-utils miscmacros regex tcp6)
 
  (test-depends test)
  
