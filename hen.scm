@@ -78,16 +78,18 @@
             (write-line (string-append data "\r") tcp-out)
             (read-line tcp-in))) args))
 
+(define (read-job-data res tcp-in)
+  (if* (string-match "^(?:RESERVED|FOUND) (\\d+) (\\d+)$" res)
+       `((id . ,(second it))
+         (data . ,(string-trim-last (read-string (+ 2 (string->number (third it))) tcp-in))))
+       res))
+
 (define (hen-reserve #!optional (timeout #f) #!key (tcp-in hen-in) (tcp-out hen-out))
   (fluid-let ([tcp-write-timeout (and timeout (* 1000 timeout))])
     (write-line (string-append (if timeout (->string+ "reserve-with-timeout " timeout)
                                    "reserve") "\r")
                 tcp-out))
-  (let ([res (read-line tcp-in)])
-    (if* (string-match "^RESERVED (\\d+) (\\d+)$" res)
-         `((id . ,(second it))
-           (data . ,(read-string (string->number (third it)) tcp-in)))
-         res)))
+  (read-job-data (read-line tcp-in) tcp-in))
 
 (define-syntax define-hen-command
   (lambda (x r c)
@@ -132,10 +134,10 @@
   [touch (id)]
   [watch (tube)]
   [ignore (tube)]
-  [peek (id)]
-  [peek-ready ()]
-  [peek-delayed ()]
-  [peek-buried ()]
+  [peek (id) (read-job-data res tcp-in)]
+  [peek-ready () (read-job-data res tcp-in)]
+  [peek-delayed () (read-job-data res tcp-in)]
+  [peek-buried () (read-job-data res tcp-in)]
   [kick (bound)]
   [stats-job (id) (read-stats res tcp-in)]
   [stats-tube (tube) (read-stats res tcp-in)]
