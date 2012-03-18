@@ -23,6 +23,9 @@
 (define (->string+ #!rest args)
   (fold-right string-append "" (map ->string args)))
 
+(define (string-trim-last string)
+  (string-trim-right string char-set:whitespace (sub1 (string-length string))))
+
 (define (second-match regex s)
   (if* (string-match regex s) (if (not (null? (cdr it))) (second it) #f)
        #f))

@@ -49,7 +49,7 @@
 
 (import scheme chicken)
 
-(use chicken data-structures extras lambda+ list-utils miscmacros regex srfi-1 srfi-13 tcp6)
+(use chicken data-structures extras lambda+ list-utils miscmacros regex srfi-1 srfi-13 srfi-14 tcp6)
 
 (import-for-syntax chicken)
 
