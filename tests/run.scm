@@ -46,8 +46,8 @@
       (map (lambda (p) (p 20 20 20 #:tcp-in (open-input-string "OK 13\r\n---\ntest:data\r\n") #:tcp-out (open-output-string))) command-list-3))
 
 (test "reserve"
-      "OK 13"
-      (hen-reserve 0 #:tcp-in (open-input-string "OK 13\r\n---\ntest:data\r\n") #:tcp-out (open-output-string)))
+      '((id . "1") (data . "---\ntest:data"))
+      (hen-reserve 0 #:tcp-in (open-input-string "RESERVED 1 13\r\n---\ntest:data\r\n") #:tcp-out (open-output-string)))
 
 (test-end)
 
