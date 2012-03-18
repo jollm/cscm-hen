@@ -124,7 +124,9 @@
       ...)]))
 
 (define (read-stats res tcp-in #!optional (parser parse-yaml-alist))
-  (if* (second-match "^OK (\\d+)$" res) (parser (read-string (string->number it) tcp-in))))
+  (if* (second-match "^OK (\\d+)$" res)
+       (parser (string-trim-last (read-string (+ 2 (string->number it)) tcp-in)))
+       res))
 
 (define-hen-command-list
   [use (tube)]
