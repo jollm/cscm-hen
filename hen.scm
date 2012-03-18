@@ -58,7 +58,7 @@
 (define hen-in)
 (define hen-out)
 
-(define priority-default (expt 2 31))
+(define priority-default 2147483648)
 
 (define-syntax with-hen
   (syntax-rules ()
